@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <conio.h> // Assuming this is for getch()
+#include <stdlib.h> // For exit()
+
+void menucard(void);
+void mainmenu(void); // Assuming this is declared elsewhere
+
+void mainmenu() {
+    int select;
+    printf ("\n\n\n<<< 1. SELECT YOUR ORDER \n\n\n<<< 2. GO BACK");
+    printf ("\n\nCHOOSE YOUR PREFERRED OPTION : ");
+    scanf ("%d", &select);
+    
+    switch (select) {
+        case 1:
+            menucard();
+            break;
+        case 2:
+            mainmenu(); // This calls itself, providing a way to go back
+            break;
+        default:
+            printf("\n\n\t<<< INVALID INPUT >>>\n\n");
+            break;
+    }
+}
+
+void menucard(void) {
+    int n;
+    float total = 0;
+    
+    printf("\nPLEASE ENTER THE NUMBER OF ITEMS YOU WANT TO ORDER : ");
+    scanf("%d", &n);
+    
+    if (n <= 0)
+        exit(0); // Exit the program if no items are ordered (assuming this is the intended behavior)
+    else {
+        int order[n]; // Variable-length array, may not be supported by all compilers
+        int b, i, serial;
+        
+        for (i = 0; i < n; i++) {
+            for (b = 1; b < 2; b++) { // This loop seems redundant, iterating only once
+                printf("\n\nPLEASE ENTER THE SERIAL NUMBER (S#) OF YOUR ITEM NUMBER %d:\t", i + 1);
+                scanf("%d", &serial);
+                order[i] = serial * 100;
+            }
+        }
+        
+        for (i = 0; i < n; i++) {
+            total += order[i];
+        }
+        
+        printf("\n\n\t\t YOUR BILL WITHOUT TAX IS = %.3f rs", total);
+        
+        // Applying 13% GST and 10% service charge
+        total += total * 0.23;
+        printf("\n\n\t YOUR TOTAL AMOUNT AFTER 13 PERCENT GST AND 10 PERCENT SERVICE CHARGE = %.3f rs", total);
+        
+        printf("\n\n\n\t<<<<< YOUR ORDER HAS BEEN RECEIVED. PLEASE WAIT 30 MINS FOR YOUR ORDER >>>>>");
+        printf("\n\n\n\t     ---Pay your bill at the cash counter & enjoy your meal! :)  \n\n\n\t\t\t");
+        
+        exit(0); // Exit the program after displaying the bill and order confirmation
+    }
+    
+    getch(); // Assuming this is to hold the console window open
+}
